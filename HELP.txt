@@ -1,0 +1,97 @@
+PRODUCT MANAGEMENT SYSTEM - HELP FILE
+Java + Oracle JDBC
+
+1. PROJECT FILES
+Keep these files in your project folder:
+- ProductManagement.java
+- HELP.txt
+- .gitignore
+- ojdbc17.jar (local only; do not upload unless redistribution is permitted)
+
+2. REQUIREMENTS
+- Java JDK installed
+- Oracle Database running
+- Oracle JDBC driver JAR (for example, ojdbc17.jar)
+- PRODUCTS table available in the same Oracle service/container used by Java
+
+3. CREATE THE TABLE
+Open SQL*Plus and connect to the correct service. Example:
+CONNECT SYSTEM@"//localhost:1521/XEPDB1"
+
+Enter your Oracle password when prompted, then check:
+SHOW CON_NAME;
+
+If PRODUCTS does not already exist, run:
+CREATE TABLE PRODUCTS (
+    ID NUMBER PRIMARY KEY,
+    NAME VARCHAR2(100) NOT NULL,
+    PRICE NUMBER(10,2) NOT NULL,
+    QUANTITY NUMBER NOT NULL
+);
+
+Do not create the table again if it already exists.
+
+4. CONFIGURE THE JAVA CONNECTION
+Open ProductManagement.java and verify the URL, username, and password:
+URL: jdbc:oracle:thin:@10.9.45.205:1521/XEPDB1
+USER: SYSTEM
+PASSWORD: your Oracle password
+
+Use the host, port, and service name that work in your environment.
+Do not upload a real database password to GitHub. Replace it with a placeholder
+before uploading, or load it from a local environment/configuration file that
+is excluded from Git.
+
+5. COMPILE AND RUN (WINDOWS POWERSHELL)
+Open VS Code in the project folder and choose Terminal > New Terminal.
+Run these commands:
+javac -cp ".;ojdbc17.jar" ProductManagement.java
+java -cp ".;ojdbc17.jar" ProductManagement
+
+6. MENU OPTIONS
+1 - Insert Product
+2 - Search Product
+3 - Update Product
+4 - Delete Product
+5 - Exit
+
+Use a unique product ID when inserting because ID is the primary key.
+
+7. UPLOAD TO GITHUB
+Create an empty repository on GitHub and copy its HTTPS URL.
+In the VS Code terminal, run:
+git init
+git add ProductManagement.java HELP.txt .gitignore
+git status
+git commit -m "Add Java Oracle product management application"
+git branch -M main
+git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+git push -u origin main
+
+Replace the example remote URL with your actual GitHub repository URL.
+If a remote named origin already exists, check it with:
+git remote -v
+To correct it, use:
+git remote set-url origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+
+8. TROUBLESHOOTING
+ORA-01017: Check the Oracle username/password and make sure they work for
+the same service used by Java.
+
+ORA-00942: Check that PRODUCTS exists in the same database container and schema
+that Java connects to.
+
+ORA-12541: Check that the Oracle listener is running and that host, port, and
+service name are correct.
+
+Oracle JDBC driver not found / No suitable driver: Check that ojdbc17.jar is
+in the project folder and included in the classpath commands.
+
+Duplicate product ID: Use a different ID.
+
+9. BEFORE PUSHING TO GITHUB
+- Replace any real password in ProductManagement.java with a safe placeholder.
+- Review `git status` before committing.
+- Do not upload database passwords, wallet files, or private configuration.
+- .gitignore excludes the JDBC JAR and compiled Java files. Anyone cloning the
+  project must obtain a compatible Oracle JDBC driver separately.
